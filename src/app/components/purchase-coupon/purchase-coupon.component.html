@@ -1,0 +1,75 @@
+<div class="container">
+  <br>
+    <p-dataView #dv [value]="availableCoupons" [style]="{'text-align':'center'}" layout="grid" [paginator]="true" [rows]="20"
+      filterBy="type"   [sortField]="sortField" [sortOrder]="sortOrder">
+        <p-header>
+            <h4><i>{{ headr }}</i></h4>
+            <div class="ui-helper-clearfix">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-4">
+                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}">
+                      </p-dropdown>
+                    </div>
+                    <div class="ui-g-6 ui-md-4">
+                        <div style="position:relative">
+                            <input type="search" pInputText placeholder="Search By Type" size=30% (keyup)="dv.filter($event.target.value)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-header>
+        <ng-template let-coupon pTemplate="gridItem" >
+            <div style="padding:.5em;" class="ui-g-12 ui-md-3">
+                <p-panel [header]="coupon.type" [style]="{'text-align':'center'}">
+                    <img src="{{ coupon.image }}" width="120" height="100">
+                    <br><br>
+                    <div class="boldDiv">{{coupon.title}}</div>
+                    <hr style="border-top-width: 3px">
+                    <div *ngIf="coupon.purchased">
+                      <button  pButton type="button" label="Already Purchased"  class="ui-button-rounded ui-button-info" (click)="selectCoupon($event, coupon)"></button>
+                    </div>
+                    <div *ngIf="!coupon.purchased">
+                      <button  pButton type="button" label="Details" class="ui-button-rounded ui-button-success" (click)="selectCoupon($event, coupon)"></button>
+                    </div>
+                </p-panel>
+            </div>
+        </ng-template>
+    </p-dataView>
+  </div>
+
+
+<p-dialog header="Coupon Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="300" (onAfterHide)="onDialogHide()"
+closeOnEscape="true" dismissableMask="true"
+>
+    <div class="ui-g" *ngIf="selectedCoupon">
+        <div class="ui-g-12" style="text-align:center">
+            <img src="{{ selectedCoupon.image }}" width="90" height="90">
+            <hr style="border-top-width: 3px">
+        </div>
+        <div class="ui-g-4 boldDiv">Title:</div>
+        <div class="ui-g-8">{{selectedCoupon.title}}</div>
+
+        <div class="ui-g-4 boldDiv">Start Date: </div>
+        <div class="ui-g-8">{{selectedCoupon.startDate}}</div>
+
+        <div class="ui-g-4 boldDiv">End Date: </div>
+        <div class="ui-g-8">{{selectedCoupon.endDate}}</div>
+
+        <div class="ui-g-4 boldDiv">Amount: </div>
+        <div class="ui-g-8">{{selectedCoupon.amount}}</div>
+
+        <div class="ui-g-4 boldDiv">Type: </div>
+        <div class="ui-g-8 ">{{selectedCoupon.type}}</div>
+
+        <div class="ui-g-4 boldDiv">Price: </div>
+        <div class="ui-g-8">{{selectedCoupon.price}}</div>
+
+        <div class="ui-g-4 boldDiv">Message: </div>
+        <div class="ui-g-8">{{selectedCoupon.message}}</div>
+        <div class="ui-g-4">
+            <!-- <button pButton type="button" label="Purchase" class="ui-button-rounded" onclick=(purchase)></button> -->
+            <button disabled="{{selectedCoupon.purchased}}" type="button"  pButton label="Purchsae" class="ui-button-rounded ui-button-success" (click)="purchaseCoupon()"></button>
+        </div>
+
+    </div>
+</p-dialog>

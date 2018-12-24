@@ -1,0 +1,102 @@
+<div class="container">
+    <br>
+    <div *ngIf="hasData!==true">
+        <div class="alert alert-info" style="text-align: center">
+            <strong>You haven't purchased any coupons yet</strong>
+          </div>
+    </div>
+<div *ngIf="hasData===true">
+    <p-dataView  #dv [value]="coupons" [style]="{'text-align':'center'}" layout="grid" [paginator]="true" [rows]="20"
+      filterBy="title"   [sortField]="sortField" [sortOrder]="sortOrder">
+        <p-header>
+            <h4><i>{{ headr }}</i></h4>
+            <div class="row">
+                <div class="ui-g-12 ui-md-4">
+                    <button type="button" pButton label="Show All Purchased Coupons" class="ui-button-rounded" (click)="getPurchasedCoupons()"></button>
+                </div>
+                    <!-- <div class="ui-g-12 ui-md-3" >
+                        <input style="margin-left: 100px" #search [(ngModel)]="searchInput" type="search" pInputText placeholder="Search By Title"
+                        size=25% (keyup)="dv.filter($event.target.value)">
+                    </div> -->
+                    <div class="ui-g-12 ui-md-4 pull-right">
+                        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}">
+                      </p-dropdown>
+                    </div>
+                    <div class="ui-g-12 ui-md-4 pull-right">
+                        <p-dropdown id="type"  [options]="types" [(ngModel)]="selectKey" name="type" [autoDisplayFirst]="false" [showClear]="true" (onChange)="onTypeChange($event)"
+                        placeholder="Select a Type"></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="ui-g-12 ui-md-2">
+                          <b class="pull-right"><i> Filter By Price: </i></b>
+                        </div>
+                      <div class="ui-g-12 ui-md-1">
+                          <b class="pull-right"><i> {{minPrice}} </i></b>
+                        </div>
+                       <div class="ui-g-12 ui-md-6" style="margin-top:10px;">
+                                <p-slider  type='range' id="rng" name="rng" [style]="{'width':'auto'}"  (onSlideEnd)="onPriceChange($event)"
+                                [(ngModel)]="price" [step]="steps" [min]="minPrice" [max]="maxPrice" [animate]="true">
+                                </p-slider>
+                                <!-- <output for="rng" onforminput="value=rng.price"></output> -->
+                        </div>
+                        <div class="ui-g-12 ui-md-1">
+                            <b class="pull-left"><i>{{maxPrice}} </i></b>
+                          </div>
+                      <div class="ui-g-12 ui-md-2">
+                          <b class="pull-left"><i>Current Price: </i> <span style="color:navy">{{price}} </span> </b>
+                      </div>
+                </div>
+        </p-header>
+        <ng-template let-coupon pTemplate="gridItem" styleClass="ui-dataview-content">
+            <div style="padding:.5em" class="ui-g-12 ui-md-3">
+                <p-panel  [header]="coupon.type" [style]="{'text-align':'center'}">
+                    <img src="{{ coupon.image }}" width="90" height="90">
+                    <br><br>
+                    <div class="boldDiv">{{coupon.title}}</div>
+                    <hr style="border-top-width: 3px">
+                    <button pButton type="button" label="Details" class="ui-button-rounded ui-button-info" (click)="selectCoupon($event, coupon);"></button>
+                </p-panel>
+            </div>
+        </ng-template>
+
+    </p-dataView>
+</div>
+
+<p-dialog header="Coupon Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="300" (onAfterHide)="onDialogHide()"
+closeOnEscape="true" dismissableMask="true"
+>
+    <div class="ui-g" *ngIf="selectedCoupon">
+        <div class="ui-g-12" style="text-align:center">
+            <img src="{{ selectedCoupon.image }}" width="90" height="90">
+            <hr style="border-top-width: 3px">
+        </div>
+        <div class="ui-g-4 boldDiv">Title:</div>
+        <div class="ui-g-8">{{selectedCoupon.title}}</div>
+
+        <div class="ui-g-4 boldDiv">Start Date: </div>
+        <div class="ui-g-8">{{selectedCoupon.startDate}}</div>
+
+        <div class="ui-g-4 boldDiv">End Date: </div>
+        <div class="ui-g-8">{{selectedCoupon.endDate}}</div>
+
+        <div class="ui-g-4 boldDiv">Amount: </div>
+        <div class="ui-g-8">{{selectedCoupon.amount}}</div>
+
+        <div class="ui-g-4 boldDiv">Type: </div>
+        <div class="ui-g-8 ">{{selectedCoupon.type}}</div>
+
+        <div class="ui-g-4 boldDiv">Price: </div>
+        <div class="ui-g-8">{{selectedCoupon.price}}</div>
+
+        <div class="ui-g-4 boldDiv">Message: </div>
+        <div class="ui-g-8">{{selectedCoupon.message}}</div>
+        <div class="ui-g-4">
+            <!-- <button pButton type="button" label="Purchase" class="ui-button-rounded" onclick=(purchase)></button> -->
+            <!-- <button type="button"  pButton label="Purchase" class="ui-button-rounded ui-button-success" (click)="purchaseCoupon()"></button> -->
+        </div>
+
+    </div>
+</p-dialog>
+
+</div>

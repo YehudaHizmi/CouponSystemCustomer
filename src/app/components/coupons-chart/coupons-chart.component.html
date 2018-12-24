@@ -1,0 +1,11 @@
+<div *ngIf="!hasCoupons===true">
+<h2>You Haven't Purchased Any Coupons Yet</h2>
+<h4>Please Go To Puechase Coupons Screen</h4>
+</div>
+<div *ngIf="hasCoupons===true">
+    <h2>Number Of Coupons By Type</h2>
+    <h4>At the following chart you can see the number of coupons by type you've purchased </h4>
+    <br>
+<p-chart type="pie" [data]="data"  width="100vw" height="60vh"></p-chart>
+</div>
+

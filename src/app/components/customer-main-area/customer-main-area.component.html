@@ -1,0 +1,69 @@
+<div class="container">
+    <p-fieldset [legend]="legend">
+      <b><i>
+        At the left side all the qvailable coupons that you can purchase.
+        If you want to purchase please drag the wanted coupon to the right side
+      </i></b>
+    </p-fieldset>
+<br>
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-6 ui-g-nopad drag-column">
+        <p-scrollPanel  [style]="{ height: '75%'}" styleClass="custombar1">
+        <ul style="margin:0;padding:0">
+            <li *ngFor="let coupon of availableCoupons" class="ui-helper-clearfix" pDraggable ="coupons"
+                (onDragStart)="dragStart($event,coupon)" (onDragEnd)="dragEnd($event)">
+                <i class="pi pi-arrows pi-2x" style="float:right;margin-top:8px"></i>
+                 <img [src]="coupon.image" style="float:left" draggable="true">
+                 <div style="margin:8px 0 0 8px;float:left">
+                  <table>
+                    <tr >
+                      <td>Title: </td><td style="text-align: right"> &nbsp; {{coupon.title}}</td>
+                    </tr>
+                    <tr>
+                        <td>Start Date</td><td style="text-align: right"> &nbsp; {{coupon.startDate}}</td>
+                    </tr>
+                    <tr>
+                        <td>Start Date</td><td style="text-align: right"> &nbsp; {{coupon.startDate}}</td>
+                    </tr>
+                    <tr>
+                        <td>Start Date</td><td style="text-align: right"> &nbsp; {{coupon.startDate}}</td>
+                    </tr>
+                    <tr>
+                        <td>Start Date</td><td style="text-align: right"> &nbsp; {{coupon.startDate}}</td>
+                    </tr>
+
+                  <!-- Title: {{coupon.title}}<br>
+                  Start Date: {{coupon.startDate}}<br>
+                  End Date: {{coupon.endDate}}<br>
+                  Type: {{coupon.type}}<br>
+                  Amount: {{coupon.amount}}<br>
+                  Message: {{coupon.message}}<br>
+                  Price: {{coupon.price}}<br> -->
+                </table>
+                </div>
+            </li>
+
+        </ul>
+      </p-scrollPanel>
+    </div>
+    <div class="ui-g-12 ui-md-6 drop-column" pDroppable="coupons"
+    (onDrop)="drop($event)">
+    <p-table [value]="selectedCoupons" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn>
+                    {{ col.displayName }}
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-coupon>
+            <tr>
+                <td>{{coupon.title}}</td>
+                <td>{{coupon.startDate}}</td>
+                <td>{{coupon.endDate}}</td>
+                <td>{{coupon.price}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+  </div>
+</div>

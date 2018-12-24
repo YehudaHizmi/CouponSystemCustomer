@@ -1,0 +1,29 @@
+:host ::ng-deep .drag-column {
+  padding-right: .5em;
+}
+:host ::ng-deep .drop-column {
+  border: 1px solid #c8c8c8;
+  background-color: #ffffff;
+  height: 200%;
+}
+.ui-g li {
+  list-style-type: none;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #c8c8c8;
+  background-color: #ffffff;
+}
+
+.custombar1 .ui-scrollpanel-wrapper {
+  border-right: 9px solid #f4f4f4;
+}
+
+.custombar1 .ui-scrollpanel-bar {
+  background-color: #1976d2;
+  opacity: 1;
+  transition: background-color .3s;
+}
+
+.custombar1 .ui-scrollpanel-bar:hover {
+  background-color: #135ba1;
+}
